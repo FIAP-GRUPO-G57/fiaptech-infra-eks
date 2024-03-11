@@ -21,7 +21,7 @@ resource "aws_subnet" "public_subnet" {
 # Subnet pública
 resource "aws_subnet" "public_subnet2" {
   vpc_id     = aws_vpc.my_vpc.id
-  cidr_block = "10.0.1.0/24" # Altere o bloco de CIDR conforme necessário
+  cidr_block = "10.0.2.0/24" # Altere o bloco de CIDR conforme necessário
   map_public_ip_on_launch = true
   availability_zone = "us-east-1b" # Altere a zona de disponibilidade conforme necessário
 }
