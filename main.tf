@@ -15,7 +15,15 @@ resource "aws_subnet" "public_subnet" {
   vpc_id     = aws_vpc.my_vpc.id
   cidr_block = "10.0.1.0/24" # Altere o bloco de CIDR conforme necessário
   map_public_ip_on_launch = true
-  availability_zone = ["us-east-1a","us-east-1a"] # Altere a zona de disponibilidade conforme necessário
+  availability_zone = "us-east-1a" # Altere a zona de disponibilidade conforme necessário
+}
+
+# Subnet pública
+resource "aws_subnet" "public_subnet2" {
+  vpc_id     = aws_vpc.my_vpc.id
+  cidr_block = "10.0.1.0/24" # Altere o bloco de CIDR conforme necessário
+  map_public_ip_on_launch = true
+  availability_zone = "us-east-1b" # Altere a zona de disponibilidade conforme necessário
 }
 
 # Security group
@@ -46,7 +54,7 @@ resource "aws_eks_cluster" "my_cluster" {
   role_arn = aws_iam_role.eks_role.arn
 
   vpc_config {
-    subnet_ids = [aws_subnet.public_subnet.id] # Use as subnets públicas
+    subnet_ids = [aws_subnet.public_subnet.id,aws_subnet.public_subnet2.id] # Use as subnets públicas
     security_group_ids = [aws_security_group.eks_sg.id]
   }
 }
