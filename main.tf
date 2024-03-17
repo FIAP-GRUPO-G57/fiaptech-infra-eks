@@ -5,31 +5,11 @@ provider "aws" {
   region = "us-east-1" # Defina sua região AWS aqui
 }
 
-# Recurso VPC
-resource "aws_vpc" "my_vpc" {
-  cidr_block = "10.0.0.0/16" # Altere o bloco de CIDR conforme necessário
-}
-
-# Subnet pública
-resource "aws_subnet" "public_subnet" {
-  vpc_id     = aws_vpc.my_vpc.id
-  cidr_block = "10.0.1.0/24" # Altere o bloco de CIDR conforme necessário
-  map_public_ip_on_launch = true
-  availability_zone = "us-east-1a" # Altere a zona de disponibilidade conforme necessário
-}
-
-# Subnet pública
-resource "aws_subnet" "public_subnet2" {
-  vpc_id     = aws_vpc.my_vpc.id
-  cidr_block = "10.0.2.0/24" # Altere o bloco de CIDR conforme necessário
-  map_public_ip_on_launch = true
-  availability_zone = "us-east-1b" # Altere a zona de disponibilidade conforme necessário
-}
 
 # Security group
 resource "aws_security_group" "eks_sg" {
-  vpc_id = aws_vpc.my_vpc.id
-  name   = "eks_sg"
+vpc_id = "vpc-005f8c7fbcaf140d8"
+name   = "eks_sg"
 
   # Regras de entrada
   ingress {
@@ -54,7 +34,7 @@ resource "aws_eks_cluster" "eks_cluster" {
   role_arn = aws_iam_role.eks_role.arn
 
   vpc_config {
-    subnet_ids = [aws_subnet.public_subnet.id,aws_subnet.public_subnet2.id] # Use as subnets públicas
+    subnet_ids = ["subnet-0976e430aa2640363","subnet-09e3e7080c4b28af7"] # Use as subnets públicas
     security_group_ids = [aws_security_group.eks_sg.id]
   }
 }
