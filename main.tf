@@ -49,8 +49,8 @@ resource "aws_security_group" "eks_sg" {
 }
 
 # Recurso EKS
-resource "aws_eks_cluster" "my_cluster" {
-  name     = "my-eks-cluster"
+resource "aws_eks_cluster" "eks_cluster" {
+  name     = "eks-cluster"
   role_arn = aws_iam_role.eks_role.arn
 
   vpc_config {
